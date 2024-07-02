@@ -1,0 +1,16 @@
+/* src/App.css */
+.app {
+  text-align: center;
+}
+.video-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.video-list > div {
+  margin: 10px;
+  cursor: pointer;
+}
+.video-player {
+  margin-top: 20px;
+}

@@ -1,0 +1,34 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./video-player
+    ports:
+      - "3000:3000"
+
+  backend:
+    build:
+      context: ./video-player-backend
+    ports:
+      - "4000:4000"
+
+  worker:
+    build:
+      context: ./video-player-worker
+
+  results:
+    build:
+      context: ./video-player-results
+    ports:
+      - "5000:5000"
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"

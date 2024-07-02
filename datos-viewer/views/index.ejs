@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Video View Data</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Real-Time Video View Data</h1>
+    <ul id="videoList"></ul>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('initialData', (videos) => {
+            const videoList = document.getElementById('videoList');
+            videoList.innerHTML = '';
+            videos.forEach(video => {
+                const li = document.createElement('li');
+                li.textContent = `${video.name} - ${video.viewTime}s viewed`;
+                videoList.appendChild(li);
+            });
+        });
+
+        socket.on('updateData', (video) => {
+            const videoList = document.getElementById('videoList');
+            let found = false;
+            Array.from(videoList.children).forEach(li => {
+                if (li.textContent.startsWith(video.name)) {
+                    li.textContent = `${video.name} - ${video.viewTime}s viewed`;
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                const li = document.createElement('li');
+                li.textContent = `${video.name} - ${video.viewTime}s viewed`;
+                videoList.appendChild(li);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Example</title>
+    <script>
+        const createItem = async () => {
+            const data = { name: "Item Name", description: "Item Description" };
+            const response = await fetch('https://<YOUR_REGION>-<YOUR_PROJECT_ID>.cloudfunctions.net/createItem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            console.log(await response.text());
+        };
+
+        const readItem = async (id) => {
+            const response = await fetch(`https://<YOUR_REGION>-<YOUR_PROJECT_ID>.cloudfunctions.net/readItem?id=${id}`);
+            console.log(await response.json());
+        };
+
+        const updateItem = async (id) => {
+            const data = { id, data: { name: "Updated Name", description: "Updated Description" } };
+            const response = await fetch('https://<YOUR_REGION>-<YOUR_PROJECT_ID>.cloudfunctions.net/updateItem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            console.log(await response.text());
+        };
+
+        const deleteItem = async (id) => {
+            const data = { id };
+            const response = await fetch('https://<YOUR_REGION>-<YOUR_PROJECT_ID>.cloudfunctions.net/deleteItem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            console.log(await response.text());
+        };
+    </script>
+</head>
+<body>
+    <button onclick="createItem()">Create Item</button>
+    <button onclick="readItem('<ITEM_ID>')">Read Item</button>
+    <button onclick="updateItem('<ITEM_ID>')">Update Item</button>
+    <button onclick="deleteItem('<ITEM_ID>')">Delete Item</button>
+</body>
+</html>
